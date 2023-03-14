@@ -2,7 +2,7 @@ package com.example.carmanagement.model.driver;
 
 import com.example.carmanagement.model.car.Car;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,18 +20,26 @@ import java.util.Set;
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+    @Column(name = "patronymic")
     private String patronymic;
+    @Column(name = "passport")
     private String passport;
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_date")
     private Date birthDate;
+    @Column(name = "driving_exp")
     private int drivingExp;
     @Enumerated(EnumType.STRING)
+    @Column(name = "driving_permit")
     private DrivingPermit drivingPermit;
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Car> cars;
     @OneToOne
     private Balance balance;

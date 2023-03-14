@@ -1,8 +1,6 @@
 package com.example.carmanagement.service;
 
-import com.example.carmanagement.model.car.Car;
 import com.example.carmanagement.model.car.Detail;
-import com.example.carmanagement.repository.CarRepo;
 import com.example.carmanagement.repository.DetailRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
