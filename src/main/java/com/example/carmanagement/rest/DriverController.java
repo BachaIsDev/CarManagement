@@ -3,6 +3,8 @@ package com.example.carmanagement.rest;
 import com.example.carmanagement.model.driver.Balance;
 import com.example.carmanagement.model.driver.Driver;
 import com.example.carmanagement.service.DriverService;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +20,13 @@ import java.util.Optional;
 public class DriverController {
     private final DriverService driverService;
 
+    @Autowired
     public DriverController(DriverService driverService) {
         this.driverService = driverService;
     }
 
     @PutMapping("/{id}/balance")
+    @ApiOperation(value = "change balance of the driver", response = ResponseEntity.class)
     public ResponseEntity<?> updateBalanceById(@PathVariable(name = "id") Long id, @RequestBody Balance balance) {
         Map<String, Object> map = new LinkedHashMap<>();
         try {
@@ -40,6 +44,7 @@ public class DriverController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "show driver by id", response = ResponseEntity.class)
     public ResponseEntity<?> getDriverById(@PathVariable(name = "id") Long id) {
         Map<String, Object> map = new LinkedHashMap<String, Object>();
         Optional<Driver> driver = driverService.getDriverById(id);
@@ -55,6 +60,7 @@ public class DriverController {
     }
 
     @GetMapping
+    @ApiOperation(value = "show all drivers", response = ResponseEntity.class)
     public ResponseEntity<?> getAllDrivers() {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<List<Driver>> driverList = driverService.getAllDrivers();
@@ -70,6 +76,7 @@ public class DriverController {
     }
 
     @PostMapping
+    @ApiOperation(value = "create new driver", response = ResponseEntity.class)
     public ResponseEntity<?> createNewDriver(@RequestBody Driver driver) {
         Map<String, Object> map = new LinkedHashMap<>();
         driverService.saveDriver(driver);
@@ -79,6 +86,7 @@ public class DriverController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation(value = "update existing driver", response = ResponseEntity.class)
     public ResponseEntity<?> updateDriver(@PathVariable(name = "id") Long id, @RequestBody Driver driver) {
         Map<String, Object> map = new LinkedHashMap<>();
         try {
@@ -105,6 +113,7 @@ public class DriverController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "delete driver by id", response = ResponseEntity.class)
     public ResponseEntity<?> deleteDriverById(@PathVariable(name = "id") Long id) {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<Driver> driver = driverService.getDriverById(id);
@@ -121,6 +130,7 @@ public class DriverController {
     }
 
     @GetMapping("/paginationAndSort/{offset}/{pageSize}/{field}")
+    @ApiOperation(value = "show sorted cars by field and page by page", response = ResponseEntity.class)
     public ResponseEntity<?> getCarsWithPaginationAndSorting(@PathVariable int offset, @PathVariable int pageSize,@PathVariable String field){
         Map<String, Object> map = new LinkedHashMap<>();
         Page<Driver> drivers = driverService.findDriversWithPaginationAndSorting(offset, pageSize, field);

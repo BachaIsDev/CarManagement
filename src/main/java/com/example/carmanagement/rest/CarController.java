@@ -4,8 +4,10 @@ import com.example.carmanagement.model.car.Car;
 import com.example.carmanagement.model.car.Detail;
 import com.example.carmanagement.model.driver.Driver;
 import com.example.carmanagement.service.CarService;
-import com.example.carmanagement.service.DetailService;
 import com.example.carmanagement.service.DriverService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +15,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
+@Api(value = "car resources")
 @RestController
 @RequestMapping("/api/car")
 public class CarController {
     private final CarService carService;
     private final DriverService driverService;
 
+    @Autowired
     public CarController(CarService carService, DriverService driverService) {
         this.carService = carService;
         this.driverService = driverService;
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "show car by id", response = ResponseEntity.class)
     public ResponseEntity<?> getCarById(@PathVariable(name = "id") Long id) {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<Car> car = carService.getCarById(id);
@@ -40,6 +45,7 @@ public class CarController {
     }
 
     @GetMapping
+    @ApiOperation(value = "show all cars", response = ResponseEntity.class)
     public ResponseEntity<?> getAllCars() {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<List<Car>> carList = carService.getAllCars();
@@ -55,6 +61,7 @@ public class CarController {
     }
 
     @PostMapping
+    @ApiOperation(value = "create new car", response = ResponseEntity.class)
     public ResponseEntity<?> createNewCar(@RequestBody Car car) {
         Map<String, Object> map = new LinkedHashMap<>();
         carService.saveCar(car);
@@ -63,6 +70,7 @@ public class CarController {
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
     @PutMapping("/{car_id}/driver/{driver_id}")
+    @ApiOperation(value = "change owner of the car", response = ResponseEntity.class)
     public ResponseEntity<?> changeCarOwner(@PathVariable(name = "car_id") Long carId,
                                             @PathVariable(name = "driver_id") Long driverId){
         Map<String, Object> map = new LinkedHashMap<>();
@@ -83,6 +91,7 @@ public class CarController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation(value = "update existing car", response = ResponseEntity.class)
     public ResponseEntity<?> updateCar(@PathVariable(name = "id") Long id, @RequestBody Car car) {
         Map<String, Object> map = new LinkedHashMap<>();
         try {
@@ -107,6 +116,7 @@ public class CarController {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "delete car by id", response = ResponseEntity.class)
     public ResponseEntity<?> deleteCarById(@PathVariable(name = "id") Long id) {
         Map<String, Object> map = new LinkedHashMap<>();
         Optional<Car> car = carService.getCarById(id);
@@ -123,6 +133,7 @@ public class CarController {
     }
 
     @PutMapping("/{car_id}/detail")
+    @ApiOperation(value = "change detail in the car", response = ResponseEntity.class)
     public ResponseEntity<?> changeDetail(@PathVariable(name = "car_id") Long carId,
                                             @RequestBody Set<Detail> details){
         Map<String, Object> map = new LinkedHashMap<>();
@@ -142,6 +153,7 @@ public class CarController {
     }
 
     @PostMapping("/{car_id}/detail")
+    @ApiOperation(value = "add new detail to the car", response = ResponseEntity.class)
     public ResponseEntity<?> addNewDetail(@PathVariable(name = "car_id") Long carId,
                                           @RequestBody Detail detail){
         Map<String, Object> map = new LinkedHashMap<>();
@@ -162,6 +174,7 @@ public class CarController {
         }
     }
     @GetMapping("/paginationAndSort/{offset}/{pageSize}/{field}")
+    @ApiOperation(value = "show sorted cars and page by page", response = ResponseEntity.class)
     public ResponseEntity<?> getCarsWithPaginationAndSorting(@PathVariable int offset, @PathVariable int pageSize,@PathVariable String field){
         Map<String, Object> map = new LinkedHashMap<>();
         Page<Car> carList = carService.findCarsWithPaginationAndSorting(offset, pageSize, field);

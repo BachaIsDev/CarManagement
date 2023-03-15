@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+// Каждый день в 8 часов проверяет дни рождения
+
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class SchedulerService {
 
-    private static final String CRON = "*/10 * * * * *";
+    private static final String CRON = "0 0 8 * * *";
 
     private final DriverService driverService;
 

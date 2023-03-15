@@ -35,7 +35,7 @@ public class DriverService {
     }
 
     public List<Driver> findDriverByBirthDate(int day, int month){
-        return driverRepo.findDriverByBirthDate(day, month);
+        return driverRepo.findByMatchMonthAndMatchDay(day, month);
     }
 
     public void saveDriver(Driver driver){
