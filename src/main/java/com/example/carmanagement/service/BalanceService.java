@@ -19,15 +19,7 @@ public class BalanceService {
         return balanceRepo.findById(id);
     }
 
-    public Optional<List<Balance>> getAllBalances(){
-        return Optional.of(balanceRepo.findAll());
-    }
-
     public void saveBalance(Balance car){
         balanceRepo.save(car);
-    }
-
-    public void deleteBalanceById(long id){
-        balanceRepo.deleteById(id);
     }
 }

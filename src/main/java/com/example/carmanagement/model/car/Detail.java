@@ -1,6 +1,8 @@
 package com.example.carmanagement.model.car;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +17,11 @@ import lombok.Setter;
 public class Detail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "serial_number")
     private String serialNumber;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private Car car;
 }
